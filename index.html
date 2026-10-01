@@ -1,0 +1,744 @@
+from pathlib import Path
+
+html = r'''<!DOCTYPE html>
+<html lang="en">
+<head><meta name="google-site-verification" content="HGcKdL9rLW8j5yob5Dk_YPG64kqOQShyz7Bm-xa86lc" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn how a Yes or No Generator can help with quick, simple decisions. Explore its features, uses, randomness, and practical tips.">
+  <title>How Can a Yes or No Generator Help You Make Quick Decisions?</title>
+
+  <style>
+    :root{
+      --cream:#efe adc;
+      --cream:#efe adc;
+      --page:#f8f7f1;
+      --white:#ffffff;
+      --navy:#111827;
+      --teal:#006b68;
+      --teal-dark:#005653;
+      --blue:#2563eb;
+      --blue-soft:#eef4ff;
+      --border:#e5e7eb;
+      --muted:#536174;
+      --green:#10b981;
+      --orange:#d97706;
+      --shadow:0 10px 35px rgba(17,24,39,.07);
+      --radius:18px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    html{scroll-behavior:smooth}
+
+    body{
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      background:var(--page);
+      color:var(--navy);
+      line-height:1.75;
+    }
+
+    a{color:inherit;text-decoration:none}
+
+    .top-line{
+      height:3px;
+      background:linear-gradient(90deg,#2563eb 0%,#06b6d4 38%,#10b981 70%,#f43f5e 100%);
+    }
+
+    /* Header */
+    .site-header{
+      background:var(--white);
+      border-bottom:1px solid #e9eceb;
+      position:sticky;
+      top:0;
+      z-index:50;
+      box-shadow:0 2px 14px rgba(17,24,39,.04);
+    }
+
+    .header-inner{
+      max-width:1240px;
+      margin:auto;
+      min-height:78px;
+      padding:0 28px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:30px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:11px;
+      font-size:24px;
+      font-weight:800;
+      letter-spacing:-.7px;
+      color:#20252d;
+      flex-shrink:0;
+    }
+
+    /* Small CSS wheel logo inspired by the supplied screenshot */
+    .brand-wheel{
+      width:52px;
+      height:52px;
+      border-radius:50%;
+      position:relative;
+      overflow:hidden;
+      border:2px solid #111827;
+      background:conic-gradient(
+        #2563eb 0 12.5%,
+        #06b6d4 12.5% 25%,
+        #10b981 25% 37.5%,
+        #22c55e 37.5% 50%,
+        #f59e0b 50% 62.5%,
+        #ef4444 62.5% 75%,
+        #f43f5e 75% 87.5%,
+        #a78bfa 87.5% 100%
+      );
+      box-shadow:0 2px 7px rgba(17,24,39,.18);
+    }
+
+    .brand-wheel::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(45deg,transparent 49%,rgba(255,255,255,.8) 49%,rgba(255,255,255,.8) 51%,transparent 51%),
+        linear-gradient(-45deg,transparent 49%,rgba(255,255,255,.8) 49%,rgba(255,255,255,.8) 51%,transparent 51%),
+        linear-gradient(90deg,transparent 49%,rgba(255,255,255,.8) 49%,rgba(255,255,255,.8) 51%,transparent 51%);
+    }
+
+    .brand-wheel::after{
+      content:"";
+      position:absolute;
+      width:15px;
+      height:15px;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%);
+      background:#111827;
+      border:4px solid #fff;
+      border-radius:50%;
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      gap:30px;
+      font-size:16px;
+      font-weight:700;
+      color:var(--teal);
+    }
+
+    .nav a{
+      transition:color .2s ease,transform .2s ease;
+      white-space:nowrap;
+    }
+
+    .nav a:hover{
+      color:var(--teal-dark);
+      transform:translateY(-1px);
+    }
+
+    .nav .active{color:#8a5b16}
+
+    .nav .chevron{
+      display:inline-block;
+      margin-left:4px;
+      font-size:12px;
+      transform:translateY(-1px);
+    }
+
+    /* Hero */
+    .hero{
+      background:linear-gradient(135deg,#efe adc 0%,#f3f0e5 58%,#eaf3f4 100%);
+      background:linear-gradient(135deg,#efe adc 0%,#f3f0e5 58%,#eaf3f4 100%);
+      border-bottom:1px solid #e4e8e5;
+      padding:58px 24px 54px;
+    }
+
+    .hero-inner{
+      max-width:940px;
+      margin:auto;
+      text-align:center;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 13px;
+      border-radius:999px;
+      background:rgba(255,255,255,.78);
+      border:1px solid rgba(0,107,104,.12);
+      color:var(--teal);
+      font-size:13px;
+      font-weight:800;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+      margin-bottom:17px;
+    }
+
+    .eyebrow-dot{
+      width:7px;height:7px;border-radius:50%;
+      background:#10b981;
+      box-shadow:0 0 0 4px rgba(16,185,129,.13);
+    }
+
+    h1{
+      font-size:clamp(32px,5vw,52px);
+      line-height:1.12;
+      letter-spacing:-1.5px;
+      color:var(--navy);
+      margin-bottom:18px;
+    }
+
+    .hero p{
+      max-width:790px;
+      margin:auto;
+      color:#344a63;
+      font-size:18px;
+    }
+
+    /* Layout */
+    .content-wrap{
+      max-width:1060px;
+      margin:0 auto;
+      padding:52px 24px 80px;
+    }
+
+    .article-card{
+      background:var(--white);
+      border:1px solid var(--border);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .article-body{
+      padding:42px 48px;
+    }
+
+    .intro-box{
+      background:linear-gradient(135deg,#f6f8ff,#f5fbfa);
+      border:1px solid #dfe8ed;
+      border-left:5px solid var(--blue);
+      border-radius:14px;
+      padding:20px 22px;
+      margin-bottom:38px;
+      color:#34445a;
+    }
+
+    .section{
+      padding:6px 0 34px;
+      margin-bottom:12px;
+      border-bottom:1px solid #edf0f2;
+    }
+
+    .section:last-child{
+      border-bottom:0;
+      margin-bottom:0;
+      padding-bottom:0;
+    }
+
+    h2{
+      font-size:29px;
+      line-height:1.3;
+      letter-spacing:-.5px;
+      margin-bottom:15px;
+      color:var(--navy);
+    }
+
+    h3{
+      font-size:20px;
+      line-height:1.4;
+      margin:25px 0 10px;
+      color:#173a4a;
+    }
+
+    p{
+      margin-bottom:15px;
+      color:#445266;
+    }
+
+    p:last-child{margin-bottom:0}
+
+    strong{
+      color:#1f2937;
+      font-weight:750;
+    }
+
+    .site-link{
+      color:var(--teal);
+      font-weight:750;
+      text-decoration:underline;
+      text-decoration-thickness:1px;
+      text-underline-offset:3px;
+    }
+
+    .feature-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:15px;
+      margin-top:18px;
+    }
+
+    .feature-card{
+      background:#fbfcfc;
+      border:1px solid #e7eceb;
+      border-radius:15px;
+      padding:19px;
+      transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
+    }
+
+    .feature-card:hover{
+      transform:translateY(-2px);
+      border-color:#d2dfdf;
+      box-shadow:0 8px 22px rgba(17,24,39,.06);
+    }
+
+    .feature-icon{
+      width:38px;height:38px;
+      display:grid;
+      place-items:center;
+      border-radius:11px;
+      background:#eef8f7;
+      color:var(--teal);
+      font-weight:900;
+      margin-bottom:10px;
+    }
+
+    .feature-card h3{
+      margin:0 0 7px;
+      font-size:17px;
+    }
+
+    .feature-card p{
+      font-size:14px;
+      margin:0;
+    }
+
+    .use-list{
+      list-style:none;
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .use-list li{
+      padding:15px 16px 15px 42px;
+      position:relative;
+      background:#fafafa;
+      border:1px solid #eceff0;
+      border-radius:13px;
+      color:#4b596b;
+    }
+
+    .use-list li::before{
+      content:"✓";
+      position:absolute;
+      left:15px;
+      top:14px;
+      width:19px;height:19px;
+      display:grid;
+      place-items:center;
+      border-radius:50%;
+      background:#e7f8f1;
+      color:#059669;
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .info-callout{
+      margin-top:22px;
+      padding:19px 20px;
+      border-radius:14px;
+      border:1px solid #f1dfb7;
+      background:#fffaf0;
+      color:#5f5138;
+    }
+
+    .info-callout strong{color:#80550a}
+
+    .conclusion{
+      margin-top:8px;
+      padding:24px;
+      border-radius:16px;
+      background:var(--teal);
+      color:white;
+    }
+
+    .conclusion h2,
+    .conclusion p{
+      color:white;
+    }
+
+    .conclusion h2{margin-bottom:10px}
+
+    /* Footer */
+    .site-footer{
+      background:#102c35;
+      color:#d9e4e5;
+      margin-top:0;
+    }
+
+    .footer-inner{
+      max-width:1240px;
+      margin:auto;
+      padding:42px 28px 24px;
+    }
+
+    .footer-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:40px;
+      padding-bottom:28px;
+      border-bottom:1px solid rgba(255,255,255,.12);
+    }
+
+    .footer-brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:white;
+      font-size:21px;
+      font-weight:800;
+      margin-bottom:9px;
+    }
+
+    .footer-brand .brand-wheel{
+      width:40px;height:40px;
+    }
+
+    .footer-brand .brand-wheel::after{
+      width:12px;height:12px;border-width:3px;
+    }
+
+    .footer-desc{
+      max-width:470px;
+      font-size:14px;
+      color:#b9cccf;
+      line-height:1.65;
+    }
+
+    .footer-links{
+      display:flex;
+      gap:24px;
+      flex-wrap:wrap;
+      color:#e7eeee;
+      font-size:14px;
+      font-weight:650;
+    }
+
+    .footer-links a:hover{color:white}
+
+    .footer-bottom{
+      padding-top:21px;
+      display:flex;
+      justify-content:space-between;
+      gap:15px;
+      color:#9eb4b7;
+      font-size:13px;
+    }
+
+    /* Accessibility / responsive */
+    a:focus-visible{
+      outline:3px solid rgba(37,99,235,.35);
+      outline-offset:3px;
+      border-radius:5px;
+    }
+
+    @media (max-width:800px){
+      .header-inner{
+        min-height:auto;
+        padding:15px 20px;
+        align-items:flex-start;
+      }
+
+      .nav{
+        gap:15px;
+        flex-wrap:wrap;
+        justify-content:flex-end;
+        font-size:14px;
+      }
+
+      .hero{padding:45px 20px 42px}
+
+      .article-body{padding:32px 25px}
+
+      .feature-grid,.use-list{grid-template-columns:1fr}
+
+      .footer-top{
+        flex-direction:column;
+      }
+    }
+
+    @media (max-width:560px){
+      .header-inner{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:12px;
+      }
+
+      .nav{
+        width:100%;
+        justify-content:flex-start;
+        gap:14px 20px;
+      }
+
+      .brand{font-size:22px}
+      .brand-wheel{width:45px;height:45px}
+
+      .hero-inner{text-align:left}
+      .hero p{font-size:16px}
+
+      .content-wrap{padding:30px 14px 55px}
+      .article-body{padding:26px 18px}
+
+      h2{font-size:25px}
+      h3{font-size:19px}
+
+      .footer-inner{padding:34px 20px 22px}
+
+      .footer-bottom{
+        flex-direction:column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="top-line"></div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="https://decidal.com/" aria-label="Decidal home">
+        <span class="brand-wheel" aria-hidden="true"></span>
+        <span>DECIDAL</span>
+      </a>
+
+      <nav class="nav" aria-label="Main navigation">
+        <a class="active" href="https://decidal.com/">Yes or No Generator (Free Online Wheel)</a>
+        <a href="#about">About Us</a>
+        <a href="#blog">Blog <span class="chevron">⌄</span></a>
+        <a href="#contact">Contact Us</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="blog">
+      <div class="hero-inner">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> Quick Decision Guide</div>
+        <h1>How Can a Yes or No Generator Help You Make Quick Decisions?</h1>
+        <p>
+          Making a small decision can sometimes take longer than expected. A simple
+          Yes or No Generator can give you a quick way to move forward when you are
+          stuck between two everyday choices.
+        </p>
+      </div>
+    </section>
+
+    <div class="content-wrap">
+      <article class="article-card">
+        <div class="article-body">
+
+          <div class="intro-box">
+            The free tool at
+            <a class="site-link" href="https://decidal.com/" target="_blank" rel="noopener">Decidal.com</a>
+            lets you enter a question and spin a wheel that lands on <strong>Yes, No, or Maybe</strong>.
+            It is designed for quick choices, casual decisions, classroom activities, meetings,
+            games, and other everyday situations.
+          </div>
+
+          <section class="section" id="about">
+            <h2>What Is a Yes or No Generator?</h2>
+            <p>
+              A <strong>Yes or No Generator</strong> is a simple online decision tool that gives you a random answer.
+              Instead of spending too much time thinking about a minor choice, you can enter your options and let the
+              wheel produce an outcome.
+            </p>
+            <p>
+              How does a random yes or no generator work? You simply enter your question if you want to,
+              choose the available options, and press the <strong>SPIN</strong> button. The wheel then lands on
+              Yes, No, or Maybe. The result gives you a simple nudge when you are having trouble choosing.
+            </p>
+            <p>
+              The tool can be useful when the decision does not require detailed analysis and you simply want a
+              quick, fair result.
+            </p>
+          </section>
+
+          <section class="section">
+            <h2>How Does the Yes or No Wheel Work?</h2>
+            <p>
+              Using the yes or no wheel is straightforward. You can start by entering a question such as,
+              “Should we order pizza?” or “Should I publish this today?” The question is optional, so you can
+              also use the wheel without entering one.
+            </p>
+            <p>
+              Next, you can adjust settings such as spinning speed and duration. Confetti and sound can also be
+              turned on or off depending on the situation.
+            </p>
+            <p>
+              After that, press <strong>SPIN</strong>. The wheel rotates and stops at one of the available results.
+            </p>
+
+            <h3>Can You Use Yes, No, and Maybe Together?</h3>
+            <p>
+              Yes. The generator can provide <strong>Yes, No, and Maybe</strong> results. If you only want two choices,
+              you can remove Maybe and use a simple Yes or No setup.
+            </p>
+            <p>
+              This makes the tool flexible for different types of decisions. You can also reset the results when
+              starting a new session.
+            </p>
+          </section>
+
+          <section class="section">
+            <h2>What Features Does the Free Yes or No Generator Offer?</h2>
+
+            <div class="feature-grid">
+              <div class="feature-card">
+                <div class="feature-icon">↻</div>
+                <h3>Adjustable Spin Controls</h3>
+                <p>
+                  You can change the spinning speed and duration. Manual stop mode is also available for users
+                  who want more control over when the wheel stops.
+                </p>
+              </div>
+
+              <div class="feature-card">
+                <div class="feature-icon">✦</div>
+                <h3>Confetti and Sound Options</h3>
+                <p>
+                  Confetti and sound can be enabled when you want a more entertaining result. You can also turn
+                  these effects off for quieter situations such as meetings or classroom activities.
+                </p>
+              </div>
+
+              <div class="feature-card">
+                <div class="feature-icon">▥</div>
+                <h3>Result Tracking and CSV Export</h3>
+                <p>
+                  The generator can track Yes, No, and Maybe results. It also provides simple charts and allows
+                  users to export their history as a CSV file with timestamps.
+                </p>
+              </div>
+
+              <div class="feature-card">
+                <div class="feature-icon">⌁</div>
+                <h3>Mobile Friendly Design</h3>
+                <p>
+                  The tool uses a responsive layout that works across phones, tablets, and desktop screens.
+                  High contrast labels also help keep the choices easy to read.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2>Where Can You Use a Yes or No Generator?</h2>
+            <p>
+              A <strong>Yes or No Generator Online</strong> can be useful in many everyday situations.
+            </p>
+
+            <ul class="use-list">
+              <li>Teachers can use it to start discussions, select activities, or introduce simple questions.</li>
+              <li>Meetings and workshops can use it to settle small choices when a quick decision is needed.</li>
+              <li>Creators and streamers can add an interactive element to their content.</li>
+              <li>Events and community activities can use the wheel to settle ties or decide who goes first.</li>
+              <li>For personal decisions, it can provide a quick nudge when you are overthinking a small choice.</li>
+            </ul>
+          </section>
+
+          <section class="section">
+            <h2>Is a Random Yes or No Generator Really Random?</h2>
+            <p>
+              The tool is designed to provide random results, with each available outcome having the same probability.
+              The generator runs locally in the browser, according to the provided site information, so users can make
+              quick choices without creating an account or signing in.
+            </p>
+
+            <div class="info-callout">
+              <strong>Keep in mind:</strong> A random result should not replace careful thinking for important
+              personal, financial, legal, medical, or safety-related decisions. It is best suited to simple choices
+              where a random outcome is acceptable.
+            </div>
+          </section>
+
+          <section class="section">
+            <h2>Can You Use a Yes or No Generator Without AI?</h2>
+            <p>
+              Yes. Some people search for an <strong>AI Yes or No Generator</strong>, but this tool focuses on quick
+              random results rather than AI-generated explanations. You can enter your options, spin the wheel, and
+              receive an immediate result without needing an AI conversation.
+            </p>
+            <p>
+              This keeps the process simple when you only need a Yes, No, or Maybe answer.
+            </p>
+          </section>
+
+          <section class="section">
+            <h2>Why Use a Free Yes or No Generator?</h2>
+            <p>
+              A free yes or no generator can make small decisions easier and more engaging. It provides a simple
+              process, flexible settings, mobile access, optional sound and confetti, result tracking, and CSV export.
+            </p>
+            <p>
+              Most importantly, it can help remove some of the pressure from minor choices. Instead of repeatedly
+              going back and forth between two options, you can define the choices and let the wheel provide a result.
+            </p>
+          </section>
+
+          <section class="conclusion">
+            <h2>Final Thoughts</h2>
+            <p>
+              A <strong>Yes or No Generator</strong> is a simple tool for quick and casual decisions. With Yes, No,
+              and Maybe options, adjustable spinning controls, optional effects, result tracking, and CSV export,
+              it can work for personal choices, classrooms, meetings, games, events, and online content.
+            </p>
+            <p>
+              When a small decision is slowing you down, a quick spin can provide the answer you need and help you
+              move on to the next thing.
+            </p>
+          </section>
+
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="contact">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <a class="footer-brand" href="https://decidal.com/" aria-label="Decidal home">
+            <span class="brand-wheel" aria-hidden="true"></span>
+            <span>DECIDAL</span>
+          </a>
+          <p class="footer-desc">
+            Simple tools for making everyday decisions faster. Spin, choose, and move forward.
+          </p>
+        </div>
+
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="https://decidal.com/">Yes or No Generator</a>
+          <a href="#about">About Us</a>
+          <a href="#blog">Blog</a>
+          <a href="#contact">Contact Us</a>
+        </nav>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 Decidal. All rights reserved.</span>
+        <span>Quick choices. Simple decisions.</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
+'''
